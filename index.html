@@ -1,0 +1,89 @@
+<!DOCTYPE html> <!-- Defines that document is HTML5 -->
+<html lang="en"> <!-- Root element of an HTML page. Good practice for accessibilty and search engine -->
+<head> <!-- Metainformation about the HTML document (data not displayed to the user)-->
+    <title>👩‍💻 devMode by Uxu❤️</title>
+
+    <!-- This following line makes enables us to use Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+</head>
+
+
+<!-- This is the visible page content-->
+<body class="h-screen overflow-hidden flex flex-col"> <!-- don't know if flex and flex-col are needed --> 
+    
+    <!-- Grid container: layout for whole page 
+        h-screen: It takes the whole screen in height
+
+        grid-cols-[]: how many columns + their Width (rem and 1fr for responsivity)
+
+        grid-rows-[]: how many rows + their Height
+    
+    -->
+    <div class="grid h-screen grid-cols-[3.5rem_1fr] grid-rows-[3rem_1fr_1.5rem]  bg-neutral-900 border-[0.5px] border-gray-400 border-opacity-15">
+
+        <!-- Top Header: logo, searchbar, - X icons right --->
+        <div class="col-span-3 p-2.5 border border-gray-400 border-opacity-15">
+            <img src="assets/VsCodeLogo.png" class="h-full w-auto">
+        </div>
+
+        <!-- Left column: icons-->
+        <div class="p-1 border border-gray-400 border-opacity-15">
+            <img src="assets/files_Icon.png" >
+        </div>
+
+        <!-- Main part (grid): screen & terminal -->
+        <div class="grid grid-rows-[1fr_19rem]" >
+            <!-- Screen-->
+            <div class="bg-neutral-800 text-white">Screen</div>
+
+            <!-- Terminal-->
+            <div class="grid grid-rows-2 border-[0.5px] border-gray-400 border-opacity-15 text-white">
+                <!-- Titles -->
+                <div class="grid grid-cols-[3.5rem-1fr-3.5rem] p-4">
+                    <p class="text-sm text-white text-opacity-80">TERMINAL</p> <!-- text-sm: text size -->
+                </div>
+
+                <!-- Input: User interaction-->
+                <div></div>
+            </div>
+        </div>
+
+        <!-- Bottom 
+            · col-span-3: defines width. It specifies how many columns must take this element regardin its size.
+        -->
+        <div class="col-span-2 border-gray-400 border-opacity-15">
+            <p class="text-white">Bottom info bar</p>
+        </div>
+
+    </div>
+    
+    <!--
+    - Top Header: logo, searchbar, - X icons right -
+    <div class="w-full h-10 bg-neutral-900 border-[0.5px] border-gray-400 border-opacity-20"></div>
+
+    -- L -
+    <div class="w-14 h-screen bg-neutral-900 border-[0.5px] border-gray-400 border-opacity-20"></div>
+    
+    --  --
+    <div class="h-52 bg-red-500"> </div>
+
+    -- Bottom 
+    <div class="flex-1 overflow-auto p-3 bg-neutral-900 border-[0.5px] border-gray-400 border-opacity-20"></div>
+-->
+
+</body>
+</html>
+
+<!--
+Dark black: bg-neutral-900 border-[0.5px]
+Light black: 
+Gray border: border-gray-400 border-opacity-20
+
+· rem is more accessible than fixed width size in pixels. Reason: it's responsive to letter size.
+
+
+Jokinek aholkautakua: https://daisyui.com/components/
+-->
+
