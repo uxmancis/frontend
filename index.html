@@ -11,7 +11,7 @@
 
 
 <!-- This is the visible page content-->
-<body class="h-screen overflow-hidden flex flex-col"> <!-- don't know if flex and flex-col are needed --> 
+<body id="main-layout" class="h-screen overflow-hidden"> 
     
     <!-- Grid container: layout for whole page 
         h-screen: It takes the whole screen in height
@@ -21,39 +21,50 @@
         grid-rows-[]: how many rows + their Height
     
     -->
-    <div class="grid h-screen grid-cols-[3.5rem_1fr] grid-rows-[3rem_1fr_1.5rem]  bg-neutral-900 border-[0.5px] border-gray-400 border-opacity-15">
+    <div id ="content-area" class="grid h-screen grid-cols-[3.5rem_15rem_1fr] grid-rows-[3rem_1fr_1.5rem]  bg-neutral-900 border-[0.5px] border-gray-400 border-opacity-15">
+    <!-- <div id ="content-area" class="col-span-3 flex"> -->
 
         <!-- Top Header: logo, searchbar, - X icons right --->
         <div class="col-span-3 p-2.5 border border-gray-400 border-opacity-15">
             <img src="assets/VsCodeLogo.png" class="h-full w-auto">
         </div>
 
-        <!-- Left column: icons-->
-        <div class="p-1 border border-gray-400 border-opacity-15">
-            <img src="assets/files_Icon.png" >
-        </div>
+        <!-- MAIN (vertically): Everything between top header and bottom -->
+        <div id ="content-area" class="col-span-3 flex">
 
-        <!-- Main part (grid): screen & terminal -->
-        <div class="grid grid-rows-[1fr_19rem]" >
-            <!-- Screen-->
-            <div class="bg-neutral-800 text-white">Screen</div>
+            <!-- Left column: icons-->
+            <div class="w-[3.5rem] p-1 border border-gray-400 border-opacity-15">
+                <button id="files-left-icon-btn">
+                    <img src="assets/files_Icon.png">
+                </button>
+                
+            </div>
 
-            <!-- Terminal-->
-            <div class="grid grid-rows-2 border-[0.5px] border-gray-400 border-opacity-15 text-white">
-                <!-- Titles -->
-                <div class="grid grid-cols-[3.5rem-1fr-3.5rem] p-4">
-                    <p class="text-sm text-white text-opacity-80">TERMINAL</p> <!-- text-sm: text size -->
+            <!--Middle: files sidebar that appears and disappears -->
+            <div id ="files-sidebar" class="hidden w-[15rem] border-[0.5px] border-gray-400 border-opacity-15 text-white">Menua</div>
+
+            <!-- Right: Main part (grid): screen & terminal -->
+            <div class="flex-1 grid grid-rows-[1fr_19rem]" >
+                <!-- Screen-->
+                <div class="bg-neutral-800 text-white">Screen</div>
+
+                <!-- Terminal-->
+                <div class="grid grid-rows-2 border-[0.5px] border-gray-400 border-opacity-15 text-white">
+                    <!-- Titles -->
+                    <div class="grid grid-cols-[3.5rem-1fr-3.5rem] p-4">
+                        <p class="text-sm text-white text-opacity-80">TERMINAL</p> <!-- text-sm: text size -->
+                    </div>
+
+                    <!-- Input: User interaction-->
+                    <div></div>
                 </div>
-
-                <!-- Input: User interaction-->
-                <div></div>
             </div>
         </div>
 
         <!-- Bottom 
             · col-span-3: defines width. It specifies how many columns must take this element regardin its size.
         -->
-        <div class="col-span-2 border-gray-400 border-opacity-15">
+        <div class="col-span-3 border-gray-400 border-opacity-15">
             <p class="text-white">Bottom info bar</p>
         </div>
 
