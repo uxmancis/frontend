@@ -1,7 +1,7 @@
 <!DOCTYPE html> <!-- Defines that document is HTML5 -->
 <html lang="en"> <!-- Root element of an HTML page. Good practice for accessibilty and search engine -->
 <head> <!-- Metainformation about the HTML document (data not displayed to the user)-->
-    <title>👩‍💻 devMode by Uxu❤️</title>
+    <title>👩‍💻 devMode by Uxu❤️ </title>
 
     <!-- This following line makes enables us to use Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -10,66 +10,86 @@
 </head>
 
 
-<!-- This is the visible page content-->
+<!-- This is the visible page content
+        h-screen: It takes the whole screen in height
+-->
 <body id="main-layout" class="h-screen overflow-hidden"> 
     
     <!-- Grid container: layout for whole page 
-        h-screen: It takes the whole screen in height
-
         grid-cols-[]: how many columns + their Width (rem and 1fr for responsivity)
-
         grid-rows-[]: how many rows + their Height
-    
     -->
-    <div id ="content-area" class="grid h-screen grid-cols-[3.5rem_15rem_1fr] grid-rows-[3rem_1fr_1.5rem]  bg-neutral-900 border-[0.5px] border-gray-400 border-opacity-15">
+    <div id ="whole-content" class= "h-screen grid grid-cols-[3.5rem_15rem_1fr] grid-rows-[3rem_1fr_1.5rem] bg-neutral-900 border-[0.5px] border-gray-400 border-opacity-15">
 
         <!-- Top Header: logo, searchbar, - X icons right --->
-        <div class="col-span-3 p-2.5 border border-gray-400 border-opacity-15">
+        <div id="header" class="col-span-3 p-2.5 border border-gray-400 border-opacity-15">
             <img src="assets/VsCodeLogo.png" class="h-full w-auto">
         </div>
 
         <!-- MAIN (vertically): Everything between top header and bottom -->
-        <div id ="content-area" class="col-span-3 flex">
+        <div id ="main-content" class="flex col-span-3">
 
             <!-- Left column: icons-->
-            <div class="w-[3.5rem] p-1 border border-gray-400 border-opacity-15">
+            <div id="left-icons" class="w-[3.5rem] p-1 border border-gray-400 border-opacity-15">
                 <button id="files-left-icon-btn">
                     <img src="assets/files_Icon.png">
                 </button>
                 
             </div>
 
-            <!--Middle: files sidebar that appears and disappears -->
-            <div id ="files-sidebar" class="hidden p-4 w-[15rem] border-[0.5px] border-gray-400 border-opacity-15 text-white">
+            <!--Middle (horizontally): files sidebar that appears and disappears -->
+            <div id ="mid-files-sidebar" class="hidden w-[15rem] p-4 border-[0.5px] border-gray-400 border-opacity-15 text-white">
                 
                 <!-- Title "Explorer"-->
                 <div>
-                    <p class="text-sm text-white text-opacity-80">EXPLORER</p> <!-- text-sm: text size -->
+                    <p id ="up-title" class="text-sm text-white text-opacity-80">EXPLORER</p> <!-- text-sm: text size -->
                 </div>
 
                 <!-- Files -->
                 <!-- <div class="p-4 grid grid-cols-[1rem_1fr]"> -->
-                <div class="p-4 flex items-center space-x-2">
+                <div id="list-files" class="p-4 flex items-center space-x-2">
                     <!-- Left: file icon-->
                     <div>
                         <img src="/assets/1file_Icon.png" class="h-4">
                     </div>
                     <!-- Right: filename -->
                     <div class="p-2">
-                        <button>instructions.txt</button>
+                        <button id="filename">instructions.txt</button>
                     </div>
                     
                 </div>
                 
             </div>
 
-            <!-- Right: Main part (grid): screen & terminal -->
-            <div class="flex-1 grid grid-rows-[1fr_19rem]" >
-                <!-- Screen-->
-                <div class="bg-neutral-800 text-white">Screen</div>
+            <!-- Right: Main part (grid): screen & terminal 
+                - flex-1: flexbox utility. It makes this container grow to fill
+                         all available space inside its parent flex container.
+            
+            -->
+            <div id="right-main" class="flex-1 , grid grid-rows-[1fr_200px]" >
+            <!-- <div class="flex-1" > -->
+
+                <!-- Screen: visualize code, game, everything here -->
+                <div id="up-screen" class="flex flex-col w-full bg-neutral-800 text-white">
+                    <!-- Files (disappears with no files)-->
+                    <!-- <div id="row-1-fixed" class="hidden h-10 w-full bg-red-500"> -->
+                    <div id="row-1-fixed" class="grid grid-cols-[12rem_1fr] w-full">
+                        <div id="opened-file" class="hidden flex items-center space-x-3 pl-4 pt-2 pb-2 bg-neutral-800 border-t-2 border-t-blue-500 border-r border-gray-400/[0.20]">
+                            <img src="/assets/1file_Icon.png" class="h-4">
+                            <p>instructions.txt</p>
+                            <button id="closeFile-btn">x</button>
+                        </div>
+                        <div id="rest-no-files" class="border-b border-gray-400 border-opacity-20"></div>
+                    </div>
+
+                    <!-- Content (code, background vscodeblack when no files)-->
+                    <div id="row-2-display"class="flex-grow w-full items-center justify-center ">
+                        <img src="/assets/VsCodeLogo_Black.png" class="w-80 opacity-35">
+                    </div>
+                </div>
 
                 <!-- Terminal-->
-                <div class="grid grid-rows-2 border-[0.5px] border-gray-400 border-opacity-15 text-white">
+                <div id="down-terminal" class="grid grid-rows-2 border-[0.5px] border-gray-400 border-opacity-15 text-white">
                     <!-- Titles -->
                     <div class="grid grid-cols-[3.5rem-1fr-3.5rem] p-4">
                         <p class="text-sm text-white text-opacity-80">TERMINAL</p> <!-- text-sm: text size -->
@@ -110,7 +130,7 @@
 
 <!--
 Dark black: bg-neutral-900 border-[0.5px]
-Light black: 
+Light black (screen): bg-neutral-800
 Gray border: border-gray-400 border-opacity-20
 
 · rem is more accessible than fixed width size in pixels. Reason: it's responsive to letter size.
