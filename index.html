@@ -38,25 +38,60 @@
             </div>
 
             <!--Middle (horizontally): files sidebar that appears and disappears -->
-            <div id ="mid-files-sidebar" class="hidden w-[15rem] p-4 border-[0.5px] border-gray-400 border-opacity-15 text-white">
+            <div id ="mid-files-sidebar" class="hidden w-[17rem] p-4 border-[0.5px] border-gray-400 border-opacity-15 text-white">
                 
                 <!-- Title "Explorer"-->
                 <div>
-                    <p id ="up-title" class="text-sm text-white text-opacity-80">EXPLORER</p> <!-- text-sm: text size -->
+                    <p id ="up-title" class="pb-4 text-sm text-white text-opacity-80">EXPLORER</p> <!-- text-sm: text size -->
                 </div>
 
                 <!-- Files -->
-                <!-- <div class="p-4 grid grid-cols-[1rem_1fr]"> -->
-                <div id="list-files" class="p-4 flex items-center space-x-2">
-                    <!-- Left: file icon-->
-                    <div>
-                        <img src="/assets/1file_Icon.png" class="h-4">
+                <div id="list-files">
+
+                    <!-- File 1: Instructions -->
+                    <div class="px-4 flex items-center space-x-2">
+                        <!-- Left: file icon-->
+                        <div>
+                            <img src="/assets/1file_Icon.png" class="h-4">
+                        </div>
+                        <!-- Right: filename -->
+                        <button id="instructionsFile" class="py-1">instructions.txt</button>
                     </div>
-                    <!-- Right: filename -->
-                    <div class="p-2">
-                        <button id="filename">instructions.txt</button>
+
+
+                    <!-- File 2: Game_vs_AI -->
+                    <div class="px-4 flex items-center space-x-2">
+                        <!-- Left: file icon-->
+                        <div>
+                            <img src="/assets/htmlIcon.png" class="h-4">
+                        </div>
+                        <!-- Right: filename -->
+                        <button id="instructionsFile" class="py-1">Game_vs_AI.html</button>
                     </div>
-                    
+
+
+                    <!-- File 3: Game_1vs1.html -->
+                    <div class="px-4 flex items-center space-x-2">
+                        <!-- Left: file icon-->
+                        <div>
+                            <img src="/assets/htmlIcon.png" class="h-4">
+                        </div>
+                        <!-- Right: filename -->
+                        <button id="instructionsFile" class="py-1">Game_1vs1.html</button>
+                    </div>
+
+                    <!-- File 4: Game_Tournament.html -->
+                    <div class="px-4 flex items-center space-x-2">
+                        <!-- Left: file icon-->
+                        <div>
+                            <img src="/assets/htmlIcon.png" class="h-4">
+                        </div>
+                        <!-- Right: filename -->
+                        <button id="instructionsFile" class="py-1">Game_Tournament.html</button>
+                    </div>
+
+
+
                 </div>
                 
             </div>

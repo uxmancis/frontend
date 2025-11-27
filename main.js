@@ -20,12 +20,12 @@ if (filesIconButton && filesSidebar) {
 }
 else
     console.error("One or more required elements (icon or sidebar) were not found in the DOM.");
-/* Files are displayed when filename on the sidebar menu is clicked */
+/* Files are displayed when instructionsFile on the sidebar menu is clicked */
 // 1. Get references to the key DOM elements
-const filenameButton = document.getElementById('filename');
+const instructionsFileButton = document.getElementById('instructionsFile');
 const openedFile = document.getElementById('opened-file');
 // Use a type guard to ensure the elements exist before proceeding
-if (filenameButton && openedFile) {
+if (instructionsFileButton && openedFile) {
     const showFileOnce = () => {
         if (openedFile.classList.contains('hidden')) {
             openedFile.classList.remove('hidden');
@@ -35,17 +35,57 @@ if (filenameButton && openedFile) {
             console.log("Sidebar is already visible. Click ignored.");
     };
     // 3. Attach the event listener to the icon button
-    filenameButton.addEventListener('click', showFileOnce);
+    instructionsFileButton.addEventListener('click', showFileOnce);
     // Optional: Log a message to the console to confirm the script loaded
     console.log("TypeScript script loaded and ready to handle clicks!");
 }
 else {
     console.error("One or more required elements (icon or sidebar) were not found in the DOM.");
 }
+/* "x" button to close openedFile */
 const closeButton = document.getElementById('closeFile-btn');
 if (closeButton && openedFile) {
     const closeFile = () => {
         openedFile.classList.toggle('hidden');
     };
     closeButton.addEventListener('click', closeFile);
+}
+const renderInstructions = (targetDivId) => {
+    // #1 Find the target element using its ID
+    const targetDiv = document.getElementById(targetDivId);
+    if (targetDiv) {
+        // #2 Set te content
+        targetDiv.innerHTML = '<div class="h-full w-full bg-blue-500">Instructions<div>';
+    }
+};
+/* Define the possible 'states' or 'targets' for navigation */
+// type navigationTarget = 'instructions' | 'PROFILE' | 'SETTINGS';
+/* navtarget: Navigation Target
+*
+*   About enum Syntax in Typescript:
+*       EnumMemberName (key) = 'Runtime value',
+*  */
+var navTarget;
+(function (navTarget) {
+    navTarget["Instructions"] = "instructions";
+    navTarget["Profile"] = "PROFILE";
+    navTarget["Settings"] = "SETTINGS";
+})(navTarget || (navTarget = {}));
+/* #2 Depending on which element have we previously clicked,
+* handleNavigation will call to a different function.
+*
+*
+*
+* */
+const handleNavigation = (target) => {
+    console.log('Navigation triggered. Setting the current view to: ${target}');
+    switch (target) {
+        case navTarget.Instructions:
+            renderInstructions("row-2-display");
+            break;
+    }
+};
+// #1 We click
+if (instructionsFileButton) {
+    instructionsFileButton.addEventListener('click', () => { handleNavigation(navTarget.Instructions); });
 }
