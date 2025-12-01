@@ -140,20 +140,30 @@ const renderTabs = (): void => {
     let tabsHtml = ''; /* tab means pestaña in Spanish */
     let contentHtml = ''; 
 
+    /* NEW - Define Active and Inactive Tailwind Class Sets */
+    //Class for UNSELECTED tab:
+    const inactiveClasses = 'bg-neutral-800 text-gray-400 border-b border-gray-400/[0.20]';
+
+    //Class for SELECTED tab:
+    const activeClasses = 'bg-neutral-900 text-white border-t-2 border-t-blue-500 border-b-0';
 
     // #3 Loop through state: it iterates over the central list of files (openFiles)
     openFiles.forEach(file => { // <-- Reads from the central data (openFiles)
-        const activeClass = file.isActive ? 'tab-active' : 'tab-inactive'; // Identify Active content
+
+        //1.- Choose the correct set of classes
+        const dynamicClasses = file.isActive ? activeClasses : inactiveClasses;
+
+        //2.- Combine static and dynamic classes
+        const staticClasses = 'file-tab items-center space-x-3 pl-4 pr-4 pt-2 pb-2 border-r border-gray-400/[0.20]';
         
         // Updates the DOM (innerHTML)
-        tabsHtml += `
-            <div class="${activeClass} file-tab items-center space-x-3 pl-4 pt-2 pb-2 bg-neutral-800 border-t-2 border-t-blue-500 border-r border-gray-400/[0.20]" onclick="selectFile(${file.id})">
+        tabsHtml += `<div class="${dynamicClasses} ${staticClasses}" onclick="selectFile(${file.id})">
                 <span>${file.name}</span>
                 <span class="close-btn" onclick="closeFile(${file.id}, event)">x</span>
             </div>
         `;
 
-        
+        /* Displays content of active file*/
         if (file.isActive) {
             contentHtml = `<div class="h-full w-full ${file.displayColour}"></div>`; // Displays the active file's content
         }
@@ -178,15 +188,29 @@ const closeFile = (fileId: number, event: Event): void => {
     const closedFileIndex = openFiles.findIndex(file => file.id === fileId);
     if (closedFileIndex === -1) return;
 
-    // 1. Remove the file from the array
+    // 1. Check if the file to be closed was the active one
+    const wasActive = openFiles[closedFileIndex].isActive;
+
+    //2. Remove the file from the array
     openFiles.splice(closedFileIndex, 1);
 
-    // 2. If the file we just closed was active, activate a new one
-    if (openFiles.length > 0 && openFiles[closedFileIndex].isActive) {
-        // Activate the file next to the closed one, or the last one
+    // 3. If the file we just closed was active, activate a new one
+    if (openFiles.length > 0 && wasActive){
         const newActiveIndex = Math.min(closedFileIndex, openFiles.length - 1);
+
+        // Activate the chosen file
         openFiles[newActiveIndex].isActive = true;
+        // If the list IS empty, 'isActive' remains false for all files (which is correct).
     }
+
+
+
+
+    // if (openFiles.length > 0 && openFiles[closedFileIndex].isActive) {
+    //     // Activate the file next to the closed one, or the last one
+    //     const newActiveIndex = Math.min(closedFileIndex, openFiles.length - 1);
+    //     openFiles[newActiveIndex].isActive = true;
+    // }
 
     // 3. Re-render the UI
     renderTabs();
@@ -205,15 +229,19 @@ const selectFile = (fileId: number): void => {
 
 const openFile = (fileName: string, fileContent: ColourBox): void => {
     // 1. Check if the file is already open
+
     const existingFile = openFiles.find(file => file.name === fileName);
 
     // 2. Deactivate all existing files
     openFiles.forEach(file => file.isActive = false);
 
-    if (existingFile) {
-        // If already open, just make it active
-        existingFile.isActive = true;
-    } else {
+    /* find() returns UNDEFINED if not found.
+    *
+    *   If file.name is FOUND, yes file exists, it is already open.
+    * */
+    if (existingFile)
+        existingFile.isActive = true; // If already open, just make it active
+    else {
         // If not open, create a new entry and add it
         const newFile: OpenFile = {
             id: Date.now(), // Simple unique ID
@@ -227,68 +255,6 @@ const openFile = (fileName: string, fileContent: ColourBox): void => {
     // 3. Re-render the UI
     renderTabs();
 };
-
-
-
-
-
-
-
-
-
-
-/* Typescript syntax:
-let/const  functionName = (paramName: type) : void */
-const renderScreen = (targetDivId: string, whichFile: navTarget): void => {
-
-    // #1 Find the target element using its ID
-    const targetDiv = document.getElementById(targetDivId);
-
-    if (targetDiv){
-        // #2 Set te content
-        if (whichFile == navTarget.Instructions)
-            targetDiv.innerHTML = '<div class="h-screen bg-blue-500">Instructions<div>'
-        else if (whichFile == navTarget.GamevsAI)
-            targetDiv.innerHTML = '<div class="h-screen bg-pink-500">Instructions<div>'
-        else if (whichFile == navTarget.Game1vs1)
-            targetDiv.innerHTML = '<div class="h-screen bg-green-500">Instructions<div>'
-        else if (whichFile == navTarget.GameTournament)
-            targetDiv.innerHTML = '<div class="h-screen bg-yellow-500">Instructions<div>'
-    }
-}
-
-
-
-/* Define the possible 'states' or 'targets' for navigation */
-// type navigationTarget = 'instructions' | 'PROFILE' | 'SETTINGS';
-
-
-/* #2 Depending on which element have we previously clicked, 
-* handleNavigation will call to a different function.
-*
-*
-* 
-* */
-// const handleNavigation = (target: navTarget): void => {
-//     console.log('Navigation triggered. Setting the current view to: ${target}');
-
-//     switch(target)
-//     {
-//         case navTarget.Instructions:
-//             renderScreen("row-2-display", target);
-//             break;
-//         case navTarget.GamevsAI:
-//             renderScreen("row-2-display", target);
-//             break;
-//         case navTarget.Game1vs1:
-//             renderScreen("row-2-display", target);
-//             break;
-//         case navTarget.GameTournament:
-//             renderScreen("row-2-display", target);
-//             break;
-
-//     }
-// }
 
 const file2_AI_btn = document.getElementById('file2_AI');
 const file3_1v1_btn = document.getElementById('file3_1v1');
@@ -325,3 +291,65 @@ if (file4_tour_btn){
         // renderScreen("row-2-display", navTarget.Instructions);
     });
 }
+
+
+
+
+
+
+
+
+
+/* Typescript syntax:
+let/const  functionName = (paramName: type) : void */
+// const renderScreen = (targetDivId: string, whichFile: navTarget): void => {
+
+//     // #1 Find the target element using its ID
+//     const targetDiv = document.getElementById(targetDivId);
+
+//     if (targetDiv){
+//         // #2 Set te content
+//         if (whichFile == navTarget.Instructions)
+//             targetDiv.innerHTML = '<div class="h-screen bg-blue-500">Instructions<div>'
+//         else if (whichFile == navTarget.GamevsAI)
+//             targetDiv.innerHTML = '<div class="h-screen bg-pink-500">Instructions<div>'
+//         else if (whichFile == navTarget.Game1vs1)
+//             targetDiv.innerHTML = '<div class="h-screen bg-green-500">Instructions<div>'
+//         else if (whichFile == navTarget.GameTournament)
+//             targetDiv.innerHTML = '<div class="h-screen bg-yellow-500">Instructions<div>'
+//     }
+// }
+
+
+
+/* Define the possible 'states' or 'targets' for navigation */
+// type navigationTarget = 'instructions' | 'PROFILE' | 'SETTINGS';
+
+
+/* #2 Depending on which element have we previously clicked, 
+* handleNavigation will call to a different function.
+*
+*
+* 
+* */
+// const handleNavigation = (target: navTarget): void => {
+//     console.log('Navigation triggered. Setting the current view to: ${target}');
+
+//     switch(target)
+//     {
+//         case navTarget.Instructions:
+//             renderScreen("row-2-display", target);
+//             break;
+//         case navTarget.GamevsAI:
+//             renderScreen("row-2-display", target);
+//             break;
+//         case navTarget.Game1vs1:
+//             renderScreen("row-2-display", target);
+//             break;
+//         case navTarget.GameTournament:
+//             renderScreen("row-2-display", target);
+//             break;
+
+//     }
+// }
+
